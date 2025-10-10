@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:8.4
+    container_name: pj_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  my_sql:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: pj_myadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "8081:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ../
+      dockerfile: docker/api/Dockerfile
+    container_name: pj_api
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      ConnectionStrings__Default: "Server=db;Port=3306;Database=${DB_NAME};User=${DB_USER};Password=${DB_PASSWORD};"
+      JWT_KEY: ${JWT_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["dotnet", "pj-server.Api.dll"]
+
+volumes:
+  dbdata:
