@@ -57,3 +57,5 @@ Thumbs.db
 #custom settings
 */Assets/_GitIgnore*
 */UserSettings*
+*bin/
+*obj/
