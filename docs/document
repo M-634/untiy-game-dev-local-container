@@ -58,4 +58,52 @@ API、DataBaseを実際に実装しながら仕組みを理解する
 
 
 
+## install 必要なもの
+
+.NET 8.0をダウンロード（このpjは.NET8.0.414）
+https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+
+Docker Desktop（4.48.0）
+
+win
+https://docs.docker.com/desktop/setup/install/windows-install/#administrator-privileges-and-installation-requirements
+
+mac
+https://docs.docker.com/desktop/setup/install/mac-install/
+
+
+docker desktop 立ち上げる
+
+以下のコマンドたたく
+
+# WSL (Ubuntu)
+
+# ディレクトリに移動
+cd pj-server
+
+# pj-server フィル内にソリューションファイル作成
+dotnet new sln -n pj-server
+
+# ASP.NET Core WebApi アプリ
+dotnet new webapi -n Api
+
+# 追加されていないならプロジェクトファイル追加
+dotnet sln add Api/Api.csproj
+
+=== ここまでは新規pj作成時 === 
+
+### 更新時
+
+# dotnet の再ビルド
+cd pj-server/Api
+dotnet restore
+dotnet build
+
+
+# Docker 側で再ビルド
+cd ../../docker
+docker compose up -d 
+
+
+
 
