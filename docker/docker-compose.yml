@@ -45,7 +45,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: ["dotnet", "pj-server.Api.dll"]
+    command: ["dotnet", "Api.dll"]
 
 volumes:
   dbdata:
