@@ -96,6 +96,8 @@ dotnet sln add Api/Api.csproj
 
 # dotnet の再ビルド
 cd pj-server/Api
+dotnet clean
+Remove-Item -Recurse -Force bin,obj
 dotnet restore
 dotnet build
 
@@ -104,6 +106,12 @@ dotnet build
 cd ../../docker
 docker compose up -d 
 
+# コンテナ起動確認
+docker ps
 
+# コンテナ停止
+docker compose down
 
-
+# 接続確認
+コマンドで接続するか、ブラウザでリンクを開く
+curl http://localhost:8080/health
