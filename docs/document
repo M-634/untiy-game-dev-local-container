@@ -104,8 +104,11 @@ Remove-Item -Recurse -Force bin,obj(一度ビルドしていたら)
 dotnet restore
 dotnet build
 
+# Docker ビルド(dotnet restore and dotnet buildも再度裏で行っている)
+cd ../../docker
+docker compose up -d --build 
 
-# Docker 側で再ビルド
+# Dockerを立ち上げる(立ち上げるのみ)
 cd ../../docker
 docker compose up -d 
 
@@ -118,3 +121,6 @@ docker compose down
 # 接続確認
 コマンドで接続するか、ブラウザでリンクを開く
 curl http://localhost:8080/health
+
+Swaggerでブラウザ上でテストする際
+http://localhost:8080/swagger

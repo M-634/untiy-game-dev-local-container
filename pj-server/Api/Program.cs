@@ -17,14 +17,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//NOTE: DockerコンテナではHttps証明書を用意していないのでリダイレクトしない
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+// rooting api
+app.MapGet("/health", () => Results.Ok(new { ok = true }));
+app.MapGet("/test", () => Results.Ok(new { ok = "test" }));
+
 app.Run();
-
-
-// // rooting api
-// app.MapGet("/health", () => Results.Ok(new { ok = true }));
