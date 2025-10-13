@@ -1,11 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Api.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+builder.Services.AddDbContext<TodoContext>(opt =>
+    opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// var cs = builder.Configuration.GetConnectionString("Default");
-// builder.Services.AddDbContext<AppDb>(o =>
-//     o.UseMySql(cs, ServerVersion.AutoDetect(cs)));
 
 var app = builder.Build();
 
@@ -15,25 +17,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/health", () => Results.Ok(new { ok = true }));
+app.UseHttpsRedirection();
 
-// app.MapGet("/api/items", async (AppDb db) =>
-// {
-//     var items = await db.Items.OrderBy(i => i.id).ToListAsync();
-//     return Results.Ok(items);
-// });
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
 
 
-// public class AppDb : DbContext
-// {
-//     public AppDb(DbContextOptions<AppDb> opt) : base(opt) { }
-//     public DbSet<Item> Items => Set<Item>();
-//     public DbSet<User> Users => Set<User>();
-//     public DbSet<UserItem> UserItems => Set<UserItem>();
-// }
-
-// public class Item { public int id {get;set;} public string code {get;set;} = ""; public string name {get;set;} = ""; public byte rarity {get;set;} }
-// public class User { public long id {get;set;} public string user_name {get;set;} = ""; public string password_hash {get;set;} = ""; }
-// public class UserItem { public long id {get;set;} public long user_id {get;set;} public string item_code {get;set;} = ""; public int count {get;set;} }
+// // rooting api
+// app.MapGet("/health", () => Results.Ok(new { ok = true }));
