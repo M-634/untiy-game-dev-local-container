@@ -1,0 +1,52 @@
+{
+  // ========= プロジェクト設定 =========
+  "dotnet.defaultSolution": "pj-server.sln",
+  "omnisharp.useModernNet": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  // ========= C# コード支援 =========
+  "csharp.semanticHighlighting.enabled": true,
+  "csharp.suppressDotnetRestoreNotification": true,
+  // 保存時のフォーマット & 警告
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-dotnettools.csharp",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  // ========= Entity Framework Core 関連 =========
+  // EF コマンドをターミナルで補完・ハイライト
+  // "terminal.integrated.env.windows": {
+  //   "DOTNET_CLI_UI_LANGUAGE": "ja"
+  // },
+  "files.associations": {
+    "*.cshtml": "razor",
+    "*.csproj": "xml",
+    "*.http": "http"
+  },
+  // ========= Swagger & Web API 開発補助 =========
+  // Swagger (OpenAPI) ドキュメントのスキーマ補完
+  "yaml.schemas": {
+    "https://json.schemastore.org/openapi-3.0.json": [
+      "swagger.yaml",
+      "openapi.yaml"
+    ]
+  },
+
+  // ========= エディタ共通 =========
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  // ========= 拡張推奨 =========
+  "extensions.recommendations": [
+    "ms-dotnettools.csdevkit", // C# Dev Kit
+    "ms-dotnettools.vscode-dotnet-runtime", // .NET ランタイム
+    "ms-vscode.vscode-typescript-next", // 補完高速化
+    "humao.rest-client", // .http ファイル実行（APIテスト）
+    "42Crunch.vscode-openapi", // OpenAPI (Swagger) 補完
+    "aaron-bond.better-comments" // コメント色分け
+  ],
+  "dotnet.inlayHints.enableInlayHintsForParameters": true,
+  "csharp.inlayHints.enableInlayHintsForTypes": true,
+  "dotnet.codeLens.enableReferencesCodeLens": true
+}
