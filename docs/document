@@ -90,6 +90,9 @@ dotnet new webapi -n Api
 # 追加されていないならプロジェクトファイル追加
 dotnet sln add Api/Api.csproj
 
+# ソリューションファイルに.csprojを追加する
+dotnet sln pj-server.sln add Api/Api.csproj
+
 === ここまでは新規pj作成時 === 
 
 ### 更新時
@@ -97,7 +100,7 @@ dotnet sln add Api/Api.csproj
 # dotnet の再ビルド
 cd pj-server/Api
 dotnet clean
-Remove-Item -Recurse -Force bin,obj
+Remove-Item -Recurse -Force bin,obj(一度ビルドしていたら)
 dotnet restore
 dotnet build
 
