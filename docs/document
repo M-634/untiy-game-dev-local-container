@@ -124,3 +124,60 @@ curl http://localhost:8080/health
 
 Swaggerでブラウザ上でテストする際
 http://localhost:8080/swagger
+
+
+
+##### DB 作成
+
+# 前の準備でTool install
+
+dotnet tool install --global dotnet-ef
+# 既に入ってる場合は
+dotnet tool update --global dotnet-ef
+
+
+##  Migrationの実行
+cd pj-server/Api
+
+# ① マイグレーション作成
+dotnet ef migrations add AddMasterTables
+
+# ② DBへ適用（DockerのMySQLに host から接続：localhost）
+dotnet ef database update
+
+
+
+dotnet clean
+dotnet build 
+dotnet ef migrations add AddMasterTables -c AppDb
+
+
+docker 立ち上げて
+
+dotnet ef database update -c AppDb
+
+
+# 削除
+dotnet ef migrations add RenameMasterTablesSnakeCase -c AppDb
+dotnet ef database update -c AppDb
+
+
+# MySqlに入る
+
+(dockerが立ち上がった状態)
+cd docker
+docker exec -it pj_db mysql -u root -p
+
+# パスワードを聞かれるのでsecretと入力
+Enter password: secret
+
+mysql> 
+と入力欄が変わったら成功です。
+
+# MySqlから抜ける際は
+mysql> exit
+
+
+# テーブルを参照する際は
+SHOW TABLES
+

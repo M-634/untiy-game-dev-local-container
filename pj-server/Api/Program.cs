@@ -1,11 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<TodoContext>(opt =>
-    opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,7 +21,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// rooting api
+// rooting api by minimal api
 app.MapGet("/health", () => Results.Ok(new { ok = true }));
 app.MapGet("/test", () => Results.Ok(new { ok = "test" }));
 
