@@ -4,6 +4,8 @@ namespace Api.Domain.User;
 
 public class User : BaseEntity
 {
-    public ulong Id { get; set; }
-    public string Name { get; set; } =  string.Empty;
+    public ulong UserId { get; set; }
+    public string UserName { get; set; } =  string.Empty;
+
+    public List<UserItem> UserItems { get; } = new();
 }

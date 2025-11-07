@@ -4,6 +4,7 @@ using Api.Infrastructure.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppDb))]
-    partial class AppDbModelSnapshot : ModelSnapshot
+    [Migration("20251105171331_UpdateRelationsAndIndexes")]
+    partial class UpdateRelationsAndIndexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,46 +48,15 @@ namespace Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("UpdatedAt"));
 
                     b.HasKey("ItemId");
 
                     b.HasIndex("ItemGroupId");
 
                     b.ToTable("m_item", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ItemId = 1,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500),
-                            ItemGroupId = 1,
-                            MaxPossessCount = 99,
-                            Rarity = 1,
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500)
-                        },
-                        new
-                        {
-                            ItemId = 2,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500),
-                            ItemGroupId = 1,
-                            MaxPossessCount = 99,
-                            Rarity = 2,
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500)
-                        },
-                        new
-                        {
-                            ItemId = 3,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500),
-                            ItemGroupId = 2,
-                            MaxPossessCount = 99,
-                            Rarity = 5,
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3500)
-                        });
                 });
 
             modelBuilder.Entity("Api.Domain.Item.ItemGroup", b =>
@@ -113,22 +85,6 @@ namespace Api.Migrations
                     b.HasKey("ItemGroupId");
 
                     b.ToTable("m_item_group", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ItemGroupId = 1,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3480),
-                            ItemGroupName = "回復薬",
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3480)
-                        },
-                        new
-                        {
-                            ItemGroupId = 2,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3480),
-                            ItemGroupName = "武器",
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3480)
-                        });
                 });
 
             modelBuilder.Entity("Api.Domain.Item.ItemLocalize", b =>
@@ -154,29 +110,6 @@ namespace Api.Migrations
                     b.HasKey("ItemId");
 
                     b.ToTable("m_item_localize", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ItemId = 1,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510),
-                            ItemName = "アイテムテスト1",
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510)
-                        },
-                        new
-                        {
-                            ItemId = 2,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510),
-                            ItemName = "アイテムテスト2",
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510)
-                        },
-                        new
-                        {
-                            ItemId = 3,
-                            CreatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510),
-                            ItemName = "アイテムテスト3",
-                            UpdatedAt = new DateTime(2025, 11, 5, 17, 59, 52, 911, DateTimeKind.Utc).AddTicks(3510)
-                        });
                 });
 
             modelBuilder.Entity("Api.Domain.User.User", b =>

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Domain.Common;
+namespace Api;
 
 public static class Config
 {

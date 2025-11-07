@@ -146,19 +146,17 @@ dotnet ef migrations add AddMasterTables
 dotnet ef database update
 
 
+# DBテーブル定義の変更/カラムの追加を行ったら　=> migrationの更新と反映を行う
 
+## 更新
 dotnet clean
 dotnet build 
-dotnet ef migrations add AddMasterTables -c AppDb
+dotnet ef migrations add <*migration_name> -c AppDb
 
+*migration_nameは命名規則に沿うこと
 
-docker 立ち上げて
+# docker 立ち上げてマイグレーションを反映する
 
-dotnet ef database update -c AppDb
-
-
-# 削除
-dotnet ef migrations add RenameMasterTablesSnakeCase -c AppDb
 dotnet ef database update -c AppDb
 
 
@@ -166,7 +164,7 @@ dotnet ef database update -c AppDb
 
 (dockerが立ち上がった状態)
 cd docker
-docker exec -it pj_db mysql -u root -p
+docker exec -it pj_db mysql -u root -p game #DB=gameを選んぶ
 
 # パスワードを聞かれるのでsecretと入力
 Enter password: secret
@@ -177,7 +175,16 @@ mysql>
 # MySqlから抜ける際は
 mysql> exit
 
-
 # テーブルを参照する際は
 SHOW TABLES
 
+
+
+## DBのリセット
+
+cd docker
+docker compose down -v
+docker compose up -d
+
+cd ../pj-server/Api
+dotnet ef database update -c AppDb
