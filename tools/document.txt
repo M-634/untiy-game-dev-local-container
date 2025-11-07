@@ -1,0 +1,26 @@
+tools 内のshellを叩く際のコマンド
+
+
+Windows 向け
+
+cd tools
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+
+.\master_exporter.ps1
+または
+.\master_importer.ps1
+
+
+Mac 向け
+
+cd tools
+
+//初回は実行権限を付与する
+chmod +x master_exporter.sh
+または
+chmod +x master_importer.sh
+
+//実行する
+sh master_exporter.sh
+または
+sh master_importer.sh
