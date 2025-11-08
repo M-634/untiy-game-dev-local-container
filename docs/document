@@ -156,7 +156,6 @@ dotnet ef migrations add <*migration_name> -c AppDb
 *migration_nameは命名規則に沿うこと
 
 # docker 立ち上げてマイグレーションを反映する
-
 dotnet ef database update -c AppDb
 
 
@@ -180,11 +179,8 @@ SHOW TABLES
 
 
 
-## DBのリセット
+## DBのリセット(Volumeを削除する)
 
 cd docker
 docker compose down -v
-docker compose up -d
-
-cd ../pj-server/Api
-dotnet ef database update -c AppDb
+docker compose up -d --build
