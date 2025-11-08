@@ -1,5 +1,6 @@
 tools 内のshellを叩く際のコマンド
 
+＊dockerは立ち上げた状態
 
 Windows 向け
 

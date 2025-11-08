@@ -6,21 +6,15 @@ namespace Api.Infrastructure.Db;
 
 public class AppDb : DbContext
 {
+    public AppDb(DbContextOptions<AppDb> options) : base(options) { }
+    
+
     public DbSet<Item> Items => Set<Item>();
     public DbSet<ItemGroup> ItemGroups => Set<ItemGroup>();
     public DbSet<ItemLocalize> ItemLocalizes => Set<ItemLocalize>();
     public DbSet<User> USers => Set<User>();
     public DbSet<UserItem> UserItems => Set<UserItem>();
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // dotnet ef 実行時に DI が効かなくても自力でプロバイダを構成する
-        if (optionsBuilder.IsConfigured) return;
-        
-        // 環境変数で上書き可能。未設定なら localhost へ。
-        var cs = Environment.GetEnvironmentVariable("EF_CONNECTION") ?? "Server=localhost;Port=3306;Database=game;User=app;Password=appsecret;";
-        optionsBuilder.UseMySql(cs, Config.MySqlServerVersion);
-    }
+
 
     protected override void OnModelCreating(ModelBuilder b)
     {
