@@ -1,4 +1,2 @@
-"item_group_id","item_group_name"
-"1","回復薬"
-"2","武器"
-"3","本"
+ItemGroupId,ItemGroupName
+1,食材

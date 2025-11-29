@@ -1,5 +1,7 @@
-using Api;
-using Api.Infrastructure.Db;
+using pj_server.Api;
+using pj_server.Api.Domain.User;
+using pj_server.Api.Infrastructure.Db;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,6 @@ using (var scope = app.Services.CreateScope())
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 // rooting api by minimal api
@@ -42,6 +43,31 @@ app.MapGet("/test/items", async (AppDb db) =>
     var items = await db.Items.Include(i => i.ItemLocalize).ToListAsync();
     return Results.Ok(items);
 });
+
+app.MapPost("create/user/", async (IServiceProvider provider, [FromBody] CreateUserFormModel value) =>
+{
+    var db = provider.GetService<AppDb>()!;
+    var users = db.USers;
+    var lastId = users.OrderBy(user => user.UserId).LastOrDefault()?.UserId ?? 0;
+    
+    var addUser = new User
+    {
+        UserId = lastId + 1u,
+        UserName = value?.Name ?? string.Empty,
+    };
+    
+    users.Add(addUser);
+    await db.SaveChangesAsync();
+   
+    return Results.Ok(new {value});
+});
+
+// app.MapPost("delete/user/{id?}", async (IServiceProvider provider, ulong? id) =>
+// {
+//     await using var db = provider.GetService<AppDb>()!;
+//     var users = await db.USers.ToListAsync();
+//     
+// });
 
 
 app.Run();

@@ -1,14 +1,13 @@
-using Api.Domain.Item;
-using Api.Domain.User;
 using Microsoft.EntityFrameworkCore;
+using pj_server.Api.Domain.Item;
+using pj_server.Api.Domain.User;
 
-namespace Api.Infrastructure.Db;
+namespace pj_server.Api.Infrastructure.Db;
 
 public class AppDb : DbContext
 {
     public AppDb(DbContextOptions<AppDb> options) : base(options) { }
     
-
     public DbSet<Item> Items => Set<Item>();
     public DbSet<ItemGroup> ItemGroups => Set<ItemGroup>();
     public DbSet<ItemLocalize> ItemLocalizes => Set<ItemLocalize>();
@@ -68,31 +67,31 @@ public class AppDb : DbContext
             .OnDelete(DeleteBehavior.Restrict).HasConstraintName("fk_u_user_item__item_id");
 
         
-        // set seed
-        var testItemGroups = new List<ItemGroup>
-        {
-            new() { ItemGroupId = 1, ItemGroupName = "回復薬" },
-            new() { ItemGroupId = 2, ItemGroupName = "武器" }
-        };
-        
-        b.Entity<ItemGroup>().HasData(testItemGroups);
-        
-        var testItems = new List<Item>
-        {
-            new() { ItemId = 1, ItemGroupId = 1, Rarity = 1, MaxPossessCount = 99 },
-            new() { ItemId = 2, ItemGroupId = 1, Rarity = 2, MaxPossessCount = 99 },
-            new() { ItemId = 3, ItemGroupId = 2, Rarity = 5, MaxPossessCount = 99 }
-        };
-        
-        b.Entity<Item>().HasData(testItems);
-        
-        var testItemLocalize = new List<ItemLocalize>
-        {
-            new() { ItemId = 1, ItemName = "アイテムテスト1" },
-            new() { ItemId = 2, ItemName = "アイテムテスト2" },
-            new() { ItemId = 3, ItemName = "アイテムテスト3" }
-        };
-
-        b.Entity<ItemLocalize>().HasData(testItemLocalize);
+        // // set seed
+        // var testItemGroups = new List<ItemGroup>
+        // {
+        //     new() { ItemGroupId = 1, ItemGroupName = "回復薬" },
+        //     new() { ItemGroupId = 2, ItemGroupName = "武器" }
+        // };
+        //
+        // b.Entity<ItemGroup>().HasData(testItemGroups);
+        //
+        // var testItems = new List<Item>
+        // {
+        //     new() { ItemId = 1, ItemGroupId = 1, Rarity = 1, MaxPossessCount = 99 },
+        //     new() { ItemId = 2, ItemGroupId = 1, Rarity = 2, MaxPossessCount = 99 },
+        //     new() { ItemId = 3, ItemGroupId = 2, Rarity = 5, MaxPossessCount = 99 }
+        // };
+        //
+        // b.Entity<Item>().HasData(testItems);
+        //
+        // var testItemLocalize = new List<ItemLocalize>
+        // {
+        //     new() { ItemId = 1, ItemName = "アイテムテスト1" },
+        //     new() { ItemId = 2, ItemName = "アイテムテスト2" },
+        //     new() { ItemId = 3, ItemName = "アイテムテスト3" }
+        // };
+        //
+        // b.Entity<ItemLocalize>().HasData(testItemLocalize);
     }
 }

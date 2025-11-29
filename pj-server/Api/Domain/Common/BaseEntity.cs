@@ -1,4 +1,4 @@
-namespace Api.Domain.Common;
+namespace pj_server.Api.Domain.Common;
 
 public abstract class BaseEntity
 {

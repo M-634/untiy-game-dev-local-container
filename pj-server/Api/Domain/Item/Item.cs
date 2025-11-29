@@ -1,6 +1,6 @@
-using Api.Domain.Common;
+using pj_server.Api.Domain.Common;
 
-namespace Api.Domain.Item;
+namespace pj_server.Api.Domain.Item;
 
 public class Item : BaseEntity
 {

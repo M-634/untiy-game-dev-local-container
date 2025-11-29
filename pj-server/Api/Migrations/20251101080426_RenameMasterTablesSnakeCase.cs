@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Api.Migrations
+namespace pj_server.Api.Migrations
 {
     /// <inheritdoc />
     public partial class RenameMasterTablesSnakeCase : Migration

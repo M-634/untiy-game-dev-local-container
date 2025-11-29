@@ -1,6 +1,6 @@
-using Api.Domain.Common;
+using pj_server.Api.Domain.Common;
 
-namespace Api.Domain.User;
+namespace pj_server.Api.Domain.User;
 
 public class User : BaseEntity
 {

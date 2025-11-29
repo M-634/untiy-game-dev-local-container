@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Api;
+namespace pj_server.Api;
 
 public static class Config
 {

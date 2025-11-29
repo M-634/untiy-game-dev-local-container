@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Api.Migrations
+namespace pj_server.Api.Migrations
 {
     /// <inheritdoc />
     public partial class SeedWithHasData : Migration
