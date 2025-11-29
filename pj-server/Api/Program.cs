@@ -62,12 +62,5 @@ app.MapPost("create/user/", async (IServiceProvider provider, [FromBody] CreateU
     return Results.Ok(new {value});
 });
 
-// app.MapPost("delete/user/{id?}", async (IServiceProvider provider, ulong? id) =>
-// {
-//     await using var db = provider.GetService<AppDb>()!;
-//     var users = await db.USers.ToListAsync();
-//     
-// });
-
 
 app.Run();
