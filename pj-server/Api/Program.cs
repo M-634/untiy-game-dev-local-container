@@ -23,11 +23,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDb>();
-    db.Database.Migrate();
-}
+//NOTE:基本的に「dotnet ef database update」 でマイグレーションファイルを更新する
+// using (var scope = app.Services.CreateScope())
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<AppDb>();
+//     db.Database.Migrate();
+// }
 
 //NOTE: DockerコンテナではHttps証明書を用意していないのでリダイレクトしない
 // app.UseHttpsRedirection();
