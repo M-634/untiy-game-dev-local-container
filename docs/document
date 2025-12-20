@@ -184,3 +184,9 @@ SHOW TABLES
 cd docker
 docker compose down -v
 docker compose up -d --build
+
+## docker のキャッシュ全消し
+cd docker
+docker compose down
+docker volume prune -f
+docker system prune -af
