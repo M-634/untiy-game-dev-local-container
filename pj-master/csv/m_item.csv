@@ -1,3 +1,11 @@
-ItemId,ItemGroupId,Rarity,MaxPossessCount
-1,1,3,99
-2,1,5,99
+"ItemId","ItemGroupId","Rarity","MaxPossessCount"
+1,1,1,99
+2,1,1,99
+3,1,2,99
+4,1,2,99
+5,1,3,99
+6,1,3,99
+7,1,4,99
+8,1,4,99
+9,1,5,99
+10,1,5,99

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using pj_server.Api.Domain.Gacha;
 using pj_server.Api.Domain.Item;
 using pj_server.Api.Domain.User;
 
@@ -7,6 +8,10 @@ namespace pj_server.Api.Infrastructure.Db;
 public class AppDb : DbContext
 {
     public AppDb(DbContextOptions<AppDb> options) : base(options) { }
+    
+    public DbSet<Gacha> Gachas => Set<Gacha>();
+    public DbSet<GachaContent> GachaContents => Set<GachaContent>();
+    public DbSet<GachaLotteryButton> GachaLotteryButtons => Set<GachaLotteryButton>();
     
     public DbSet<Item> Items => Set<Item>();
     public DbSet<ItemGroup> ItemGroups => Set<ItemGroup>();
@@ -65,6 +70,30 @@ public class AppDb : DbContext
         
         b.Entity<UserItem>().HasOne(x => x.Item).WithMany().HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict).HasConstraintName("fk_u_user_item__item_id");
+        
+        
+        //Sample Create Gacha DB
+        b.Entity<Gacha>().ToTable("m_gacha").HasKey(x => x.GachaId);
+        b.Entity<GachaContent>().ToTable("m_gacha_content").HasKey(x => x.Id);
+        b.Entity<GachaLotteryButton>().ToTable("m_gacha_lottery_button").HasKey(x => x.Id);
+        
+        //Setting fks and navigations
+        b.Entity<GachaContent>().HasOne(g => g.Item).WithMany().HasForeignKey(x => x.ItemId)
+            .OnDelete(DeleteBehavior.Restrict).HasConstraintName("fk_m_gacha_content__item_id");
+        
+        
+        //Setting Date Time Column
+        b.Entity<Gacha>().Property(x => x.OpenAt).HasColumnType("timestamp");
+        b.Entity<Gacha>().Property(x => x.CloseAt).HasColumnType("timestamp");
+        b.Entity<Gacha>().Property(x => x.CreatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP");
+        b.Entity<Gacha>().Property(x => x.UpdatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+        
+        b.Entity<GachaContent>().Property(x => x.CreatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP");
+        b.Entity<GachaContent>().Property(x => x.UpdatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+      
+        b.Entity<GachaLotteryButton>().Property(x => x.CreatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP");
+        b.Entity<GachaLotteryButton>().Property(x => x.UpdatedAt).HasColumnType("timestamp").HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+
 
         
         // // set seed
@@ -78,6 +107,8 @@ public class AppDb : DbContext
         //
         // var testItems = new List<Item>
         // {
+        
+        
         //     new() { ItemId = 1, ItemGroupId = 1, Rarity = 1, MaxPossessCount = 99 },
         //     new() { ItemId = 2, ItemGroupId = 1, Rarity = 2, MaxPossessCount = 99 },
         //     new() { ItemId = 3, ItemGroupId = 2, Rarity = 5, MaxPossessCount = 99 }

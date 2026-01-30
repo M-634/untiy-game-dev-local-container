@@ -3,6 +3,8 @@ using pj_server.Api.Domain.User;
 using pj_server.Api.Infrastructure.Db;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using pj_server.Api.bin;
+using pj_server.Api.Domain.Gacha;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +63,35 @@ app.MapPost("create/user/", async (IServiceProvider provider, [FromBody] CreateU
     await db.SaveChangesAsync();
    
     return Results.Ok(new {value});
+});
+
+app.MapPost("gacha/execute/", (IServiceProvider provider, [FromBody] RequestGachaExecute request) =>
+{
+    var db = provider.GetService<AppDb>()!;
+    var targetGachaTable = db.Gachas.FirstOrDefault(x => x.GachaId == request.GachaId);
+    if (targetGachaTable == null)
+    {
+        throw new Exception("Gacha not found");
+    }
+    
+    //ガチャ抽選
+    var targetGachaContents = db.GachaContents
+        .Where(x => x.GachaContentGroupId == targetGachaTable.GachaContentGroupId)
+        .OrderBy(x => x.LotteryRatio)
+        .ToList();
+
+    int executeCount = request.ExecuteCount;
+    var result = new List<int>(executeCount);
+    var itemTable = db.Items;
+
+    for (int i = 0; i < executeCount; i++)
+    {
+        var temp = Utility.WeightRandomChoose(targetGachaContents);
+        var getItem = itemTable.FirstOrDefault(x => x.ItemId == temp.ItemId)!;
+        result.Add(getItem.ItemId); 
+    }
+    
+    return Results.Ok(result);
 });
 
 
