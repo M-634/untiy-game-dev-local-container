@@ -1,0 +1,11 @@
+サンプルUnityProjectのPackage依存
+
+PackageManagerから
+
+・Addressables v2.7.6
+
+NuGetから
+
+・MasterMemory v3.0.4
+・MessagePack v3.1.4
+・UniTask latest

@@ -91,7 +91,10 @@ app.MapPost("gacha/execute/", (IServiceProvider provider, [FromBody] RequestGach
         result.Add(getItem.ItemId); 
     }
     
-    return Results.Ok(result);
+    return Results.Ok(new ResponseGachaExecute
+    {
+        ItemIds = result.ToArray()
+    });
 });
 
 

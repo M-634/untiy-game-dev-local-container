@@ -1,8 +1,7 @@
-
 using System.Reflection;
+using MasterDefine;
 using MasterMemory;
 using MySqlConnector;
-using pj_master.Schemas;
 
 namespace pj_master.Tools;
 

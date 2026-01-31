@@ -1,3 +1,5 @@
-namespace pj_master.Schemas;
+namespace MasterDefine
+{
+    public interface IMasterDefine { };
+}
 
-public interface IMasterDefine;

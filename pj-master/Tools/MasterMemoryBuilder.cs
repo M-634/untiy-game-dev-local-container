@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Reflection;
+using MasterDefine;
 using MasterMemory;
 using pj_master.Schemas;
 
@@ -146,6 +147,11 @@ public static class MasterMemoryBuilder
 
         if (targetType.IsEnum)
             return Enum.Parse(targetType, raw, ignoreCase: true);
+
+        if (targetType == typeof(DateTime))
+        {
+            return DateTime.Parse(raw);
+        }
 
         // Nullable<T>
         if (Nullable.GetUnderlyingType(targetType) is Type inner)
